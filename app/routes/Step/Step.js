@@ -112,7 +112,7 @@ class Step extends Component {
                 <Text> Oglądnij jeszcze raz.</Text>
               </View>
             </TouchableNativeFeedback>
-
+          
             <Button buttonStyle={styles.nextStep} onPress={this.nextStep.bind(this)} title="PRZEJDŹ DALEJ"/>
 
         </View>

@@ -5,9 +5,17 @@ import content from "../../config/content.js";
 
 const { surveyOptions } = content;
 
-import * as Firebase from 'firebase';
+import * as firebase from 'firebase';
 
-const fb = new Firebase("https://mobictg-99c58.firebaseio.com/");
+const config = {
+    apiKey: "AIzaSyDnpI3PBuJYP1SD1T0kbc5laCF4HiC3dnY",
+    authDomain: "mobictg-53f13.firebaseapp.com",
+    databaseURL: "https://mobictg-53f13.firebaseio.com",
+    storageBucket: "mobictg-53f13.appspot.com",
+    messagingSenderId: "968648298389"
+  };
+  firebase.initializeApp(config);
+
 
 class Survey extends Component {
   constructor () {
@@ -20,18 +28,23 @@ class Survey extends Component {
       satisfactionLevel: "mały",
       steps: []
     };
+    window.location = {
+    href: null
+}
   }
   validateResults () {
     return this.state.age.length
   }
+
+
   goToHomeScene () {
     if (!this.validateResults()) {
       alert("Wpisz swoj wiek zanim zakonczysz ankiete.")
       return; }
     this.setState({ steps: this.props.steps});
-    fb.set({
-      ...this.state
-    });
+    this.setState({ list: [...this.state.list, ...[newObject]] });
+
+    console.log(this.state);
     this.props.navigator.push({
       name: "HomeScene"
     });
@@ -43,7 +56,7 @@ class Survey extends Component {
       <FormLabel> Wiek </FormLabel>
       <FormInput onChangeText={age => this.setState({ age })} />
 
-        <FormLabel> Ciąza </FormLabel>
+        <FormLabel style={styles.formlabel}> Ciąza </FormLabel>
 
         <Picker
           selectedValue={this.state.pregnancy}
@@ -77,7 +90,7 @@ class Survey extends Component {
           <Picker.Item key={i} label={value} value={value}/>)}
         </Picker>
 
-        <Button title="ZAKOŃCZ ANKIETĘ" onPress={() => this.goToHomeScene()}/>
+        <Button buttonStyle={styles.button} title="ZAKOŃCZ ANKIETĘ" onPress={() => this.goToHomeScene()}/>
       </View>
     );
   }
@@ -86,11 +99,20 @@ class Survey extends Component {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "space-around",
-    flex: 1
+    flex: 1,
+    backgroundColor: "#2979ff",
+
   },
   text: {
     alignItems: "center"
+  },
+  button: {
+    backgroundColor: "#1de9b6",
+  },
+  formlabel: {
+    color: "#fff"
   }
+
 });
 
 export default Survey;
